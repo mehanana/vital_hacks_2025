@@ -29,7 +29,7 @@ const Results: React.FC<ResultsProps> = ({ results, onRestart }) => {
                 className="btn btn-outline-primary btn-sm mt-2"
                 onClick={() => setSelectedDisease(selectedDisease === result.disorder ? null : result.disorder)}
               >
-                {selectedDisease === result.disorder ? 'Hide Details' : 'Learn More'}
+                {selectedDisease === result.disorder ? 'Hide Details' : 'Preventative Care'}
               </button>
               {selectedDisease === result.disorder && (
                 <DiseaseDetails diseaseName={result.disorder} />
