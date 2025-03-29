@@ -10,7 +10,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
     <nav className="navbar navbar-expand-lg navbar-dark mb-4">
       <div className="container">
         <a className="navbar-brand" href="#">
-          Medical Diagnostic Tool
+        Symptoms Diagnostics Tool
         </a>
         <button
           className="navbar-toggler"
