@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #d6adee;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -42,7 +42,8 @@ body {
 }
 
 .navbar {
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #2f0452;
 }
 
 .navbar-brand {
@@ -53,6 +54,7 @@ body {
   cursor: pointer;
   padding: 0.5rem 1rem;
   transition: all 0.2s ease-in-out;
+  color: white !important;
 }
 
 .nav-link:hover {
