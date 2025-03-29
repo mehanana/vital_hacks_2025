@@ -12,7 +12,7 @@ const Results: React.FC<ResultsProps> = ({ results, onRestart }) => {
 
   return (
     <div>
-      <h3 className="text-center mb-4">Your Results</h3>
+      <h3 className="text-center mb-4">Your Potential Risks</h3>
       <div id="results-container">
         {results.length === 0 ? (
           <div className="alert alert-info">
