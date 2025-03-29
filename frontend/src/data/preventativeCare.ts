@@ -119,5 +119,14 @@ export const preventativeCareData: { [key: string]: string[] } = {
     "Take regular breaks during repetitive activities",
     "Maintain good posture and ergonomics",
     "Strengthen surrounding muscles to reduce tendon stress"
+  ],
+  'Gout': [
+    "Stay hydrated by drinking plenty of water",
+    "Limit consumption of high-purine foods (red meat, organ meats, seafood)",
+    "Maintain a healthy weight through regular exercise",
+    "Limit alcohol consumption, especially beer",
+    "Eat a balanced diet rich in fruits and vegetables",
+    "Avoid sugary drinks and foods high in fructose",
+    "Take prescribed medications as directed"
   ]
 }; 

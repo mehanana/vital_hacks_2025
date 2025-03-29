@@ -487,5 +487,29 @@ export const diseaseInfoData: { [key: string]: DiseaseInfo } = {
       'https://www.mayoclinic.org/diseases-conditions/tendinitis/symptoms-causes/syc-20378243',
       'https://www.niams.nih.gov/health-topics/tendinitis'
     ]
+  },
+  'Gout': {
+    title: 'Gout',
+    description: 'A form of arthritis characterized by severe pain, redness, and tenderness in joints, caused by the buildup of uric acid crystals.',
+    symptoms: [
+      'Joint stiffness',
+      'Joint swelling',
+      'Redness in big toe',
+      'Pain in ankles',
+      'Pain in knees',
+      'Intense joint pain',
+      'Limited range of motion'
+    ],
+    treatments: [
+      'Nonsteroidal anti-inflammatory drugs (NSAIDs)',
+      'Colchicine',
+      'Corticosteroids',
+      'Uric acid-lowering medications',
+      'Lifestyle changes'
+    ],
+    sources: [
+      'https://www.mayoclinic.org/diseases-conditions/gout/symptoms-causes/syc-20372897',
+      'https://www.niams.nih.gov/health-topics/gout'
+    ]
   }
 }; 
