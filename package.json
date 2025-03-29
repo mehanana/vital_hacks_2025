@@ -1,8 +1,19 @@
 {
+  "name": "medical-diagnostic-tool",
+  "version": "1.0.0",
+  "description": "A medical symptom diagnostic tool with React frontend and Node.js backend",
   "scripts": {
-    "start": "servor --reload"
+    "install-all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "start:frontend": "cd frontend && npm start",
+    "start:backend": "cd backend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "test": "cd frontend && npm test"
   },
   "dependencies": {
-    "servor": "^4.0.2"
+    "concurrently": "^8.2.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
   }
 }

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Result } from '../types';
+import DiseaseDetails from './DiseaseDetails';
 
 interface ResultsProps {
   results: Result[];
@@ -7,6 +8,8 @@ interface ResultsProps {
 }
 
 const Results: React.FC<ResultsProps> = ({ results, onRestart }) => {
+  const [selectedDisease, setSelectedDisease] = useState<string | null>(null);
+
   return (
     <div>
       <h3 className="text-center mb-4">Your Results</h3>
@@ -22,6 +25,15 @@ const Results: React.FC<ResultsProps> = ({ results, onRestart }) => {
                 <h5 className="mb-0">{result.disorder}</h5>
                 <span className="result-percentage">{result.percentage.toFixed(1)}% match</span>
               </div>
+              <button
+                className="btn btn-outline-primary btn-sm mt-2"
+                onClick={() => setSelectedDisease(selectedDisease === result.disorder ? null : result.disorder)}
+              >
+                {selectedDisease === result.disorder ? 'Hide Details' : 'Learn More'}
+              </button>
+              {selectedDisease === result.disorder && (
+                <DiseaseDetails diseaseName={result.disorder} />
+              )}
             </div>
           ))
         )}

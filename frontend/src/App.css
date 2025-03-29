@@ -161,3 +161,41 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #5a32a3;
 }
+
+.disease-details {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #dee2e6;
+}
+
+.disease-details .card {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.disease-details .card-title {
+  color: #6f42c1;
+  font-weight: bold;
+}
+
+.disease-details .list-group-item {
+  border-left: none;
+  border-right: none;
+}
+
+.disease-details .list-group-item:first-child {
+  border-top: none;
+}
+
+.disease-details .list-group-item:last-child {
+  border-bottom: none;
+}
+
+.disease-details a {
+  color: #6f42c1;
+  text-decoration: none;
+}
+
+.disease-details a:hover {
+  text-decoration: underline;
+}
