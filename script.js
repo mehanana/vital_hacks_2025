@@ -10,7 +10,7 @@ const disordersData = {
     'Toxic Myopathy': ['muscle_pain', 'muscle_tenderness', 'weakness', 'fatigue', 'dark_urine'],
     'Fibromyalgia': ['muscle_pain', 'muscle_tenderness', 'fatigue', 'headache', 'depression', 'anxiety'],
     'Compartment Syndrome': ['severe_pain_in_muscle_compartment', 'swelling', 'tightness', 'numbness_in_specific_compartment', 'decreased_movement', 'loss_of_circulation'],
-    'Tendonitis': ['inflammation_of_tendons', 'pain_and_stiffness_during_movement', 'swelling_in_shoulders', 'swelling_in_elbows', 'swelling_in_knees', 'swelling_in_heels'],
+    'Tendinitis': ['inflammation_of_tendons', 'pain_and_stiffness_during_movement', 'swelling_in_shoulders', 'swelling_in_elbows', 'swelling_in_knees', 'swelling_in_heels'],
     'Bursitis': ['inflammation_of_bursae', 'swelling', 'restricted_movement', 'joint_pain', 'joint_swelling', 'muscle_tenderness'],
     'Chronic Fatigue Syndrome': ['muscle_fatigue', 'difficulty_concentrating', 'joint_pain', 'muscle_pain', 'extreme_exhaustion'],
     'Pyomyocitis': ['fever', 'chills', 'muscle_pain', 'swelling', 'redness'],
@@ -23,6 +23,117 @@ const disordersData = {
     'Osteoarthritis': ['joint_pain', 'joint_stiffness', 'joint_tenderness', 'loss_of_flexibility', 'bone_spurs', 'joint_swelling', 'joints_pop_or_crackle_often'],
     'Rickets': ['delayed_growth_and_motor_skills', 'spine_pain', 'pelvis_pain', 'leg_pain', 'muscle_weakness', 'bowed_legs', 'thickened_wrists_and_ankles', 'breastbone_projection'],
     'Osteosarcoma': ['bone_pain', 'swelling_and_tenderness_near_affected_area', 'weakened_bones', 'broken_bones', 'exhaustion', 'severe_or_extreme_weight_loss_over_a_short_period_of_time']
+};
+
+// Preventative care data
+const preventativeCareData = {
+    'Osteoporosis': [
+        "Engage in strength training or cardio for at least 150 minutes per week.",
+        "Consume a diet rich in calcium, vitamin D, and protein.",
+        "Limit alcohol intake and avoid smoking."
+    ],
+    'Osteoarthritis': [
+        "Engage in regular exercise and maintain a healthy weight.",
+        "Focus on stretching and strengthening muscles, ensuring that proper form is used to prevent injuries.",
+        "Eat a nutritious and balanced diet."
+    ],
+    'Rickets': [
+        "Obtain adequate sun exposure to produce vitamin D in the skin.",
+        "Consume foods that are rich in vitamin D and calcium as well, such as fish, eggs, dairy, and leafy green vegetables."
+    ],
+    'Polymyositis': [
+        "Regular exercise under medical supervision",
+        "Avoid overexertion",
+        "Be cautious of infections or illnesses",
+        "Ensure a balanced diet"
+    ],
+    'Dermatomyositis': [
+        "Protect the skin from excessive sun exposure",
+        "Avoid strenuous physical activity",
+        "Regularly monitor lung and heart involvement"
+    ],
+    'Rhabdomyolysis': [
+        "Stay hydrated, avoid heavy physical activity",
+        "Early detection and treatment"
+    ],
+    'Myasthenia Gravis': [
+        "Avoid extreme temperatures",
+        "Manage stress",
+        "Monitor swallowing and breathing"
+    ],
+    'Toxic Myopathy': [
+        "Avoid drugs or substances that may contribute to muscle damage",
+        "Stay hydrated",
+        "Monitor for signs of kidney dysfunction"
+    ],
+    'Fibromyalgia': [
+        "Regular low-impact exercise",
+        "Manage stress and engage in relaxation techniques",
+        "Avoid overexertion"
+    ],
+    'Compartment Syndrome': [
+        "Avoid tight clothing or constrictive bandages",
+        "Seek immediate medical attention if suspect compartment syndrome"
+    ],
+    'Tendinitis': [
+        "Rest the affected tendon, apply ice to reduce inflammation",
+        "Use proper techniques during physical activities",
+        "Physical therapy"
+    ],
+    'Bursitis': [
+        "Avoid repetitive motions that place stress on the affected joints",
+        "Apply ice to reduce swelling and inflammation",
+        "Use ergonomic devices"
+    ],
+    'Chronic Fatigue Syndrome': [
+        "Prioritize rest and avoid overexertion",
+        "Maintain a balanced diet",
+        "Develop a daily routine that includes rest"
+    ],
+    'Pyomyositis': [
+        "Avoid intense physical exertion",
+        "Seek prompt medical care if fever, muscle pain, or swelling occurs"
+    ],
+    'Lactic Acidosis': [
+        "Avoid excessive physical exertion",
+        "Stay hydrated",
+        "Maintain a balanced diet",
+        "Intravenous fluids and bicarbonate therapy in severe cases"
+    ],
+    'Lupus': [
+        "Avoid sun exposure",
+        "Manage stress",
+        "Practice good hygiene to prevent infections that can cause Lupus",
+        "Reduce smoking",
+        "Practice a healthy diet",
+        "Regular exercise",
+        "8 hours of sleep",
+        "Stay hydrated"
+    ],
+    "Sjogren's Syndrome": [
+        "Maintain good oral hygiene",
+        "Stay hydrated to prevent dryness",
+        "Use humidifiers to increase moisture in the air",
+        "Rest well",
+        "Exercise regularly",
+        "Manage stress",
+        "Eat a healthy diet",
+        "Limit exposure to irritants"
+    ],
+    'Neuropathic Arthropathy': [
+        "Manage underlying conditions (e.g., diabetes)",
+        "Practice good foot hygiene (wash and dry feet regularly)",
+        "Use comfortable footwear",
+        "Avoid trauma/injuries to the foot"
+    ],
+    'Ehlers-Danlos': [
+        "Avoid high-impact activities (e.g., contact sports, weightlifting) since they put extra stress on your joints",
+        "Gentle exercise regularly",
+        "Maintain a balanced diet",
+        "Stay hydrated",
+        "7-8 hours of quality sleep",
+        "Stress management"
+    ]
 };
 
 // Initial screening questions
@@ -116,9 +227,20 @@ function displayResults(results) {
         const resultCard = document.createElement('div');
         resultCard.className = 'result-card';
         resultCard.innerHTML = `
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">${disorder}</h5>
                 <span class="result-percentage">${percentage.toFixed(1)}% match</span>
+            </div>
+            <div class="preventative-care-section">
+                <h6 class="mb-2">Preventative Care Options:</h6>
+                <ul class="list-unstyled mb-0">
+                    ${preventativeCareData[disorder]?.map(care => `
+                        <li class="mb-2">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            ${care}
+                        </li>
+                    `).join('') || '<li class="text-muted">No preventative care information available.</li>'}
+                </ul>
             </div>
         `;
         resultsContainer.appendChild(resultCard);
