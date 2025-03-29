@@ -81,7 +81,7 @@ const App: React.FC = () => {
     return (
       <div className="card shadow">
         <div className="card-header bg-primary text-white">
-          <h2 className="text-center mb-0">Medical Symptom Diagnostic Tool</h2>
+          <h2 className="text-center mb-0">Symptom Diagnostics for Skeletal, Muscular, and Joint Diseases</h2>
         </div>
         <div className="card-body">
           {currentStep === 'welcome' && <Welcome onStart={handleStart} />}
