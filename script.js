@@ -25,37 +25,23 @@ const disordersData = {
     'Osteosarcoma': ['bone_pain', 'swelling_and_tenderness_near_affected_area', 'weakened_bones', 'broken_bones', 'exhaustion', 'severe_or_extreme_weight_loss_over_a_short_period_of_time']
 };
 
-// Symptom categories for grouping
-const symptomCategories = {
-    'Joint Symptoms': ['joint_pain', 'joint_stiffness', 'joint_swelling', 'joint_tenderness', 'joint_redness', 'joints_pop_or_crackle_often', 'loose_joints'],
-    'Muscle Symptoms': ['muscle_pain', 'muscle_weakness', 'muscle_cramps', 'muscle_stiffness', 'muscle_spasms', 'muscle_tenderness', 'severe_pain_in_muscle_compartment'],
-    'Fatigue Symptoms': ['fatigue', 'muscle_fatigue', 'fatigue_with_exertion', 'lack_of_energy', 'extreme_exhaustion', 'exhaustion'],
-    'Pain Symptoms': ['painful_walking', 'back_pain', 'spine_pain', 'pelvis_pain', 'leg_pain', 'bone_pain', 'chronic_pain'],
-    'Swelling Symptoms': ['swelling', 'swelling_around_eye', 'swelling_in_shoulders', 'swelling_in_elbows', 'swelling_in_knees', 'swelling_in_heels'],
-    'Other Symptoms': [] // Will be populated with remaining symptoms
-};
+// Initial screening questions
+const initialQuestions = [
+    'joint_pain',
+    'muscle_pain',
+    'fatigue',
+    'swelling',
+    'bone_pain'
+];
 
-// Get all unique symptoms and group them
-function getAllSymptoms() {
-    const allSymptoms = new Set();
-    Object.values(disordersData).forEach(symptoms => {
-        symptoms.forEach(symptom => allSymptoms.add(symptom));
-    });
-    
-    // Group remaining symptoms into 'Other Symptoms'
-    const categorizedSymptoms = new Set();
-    Object.values(symptomCategories).forEach(category => {
-        category.forEach(symptom => categorizedSymptoms.add(symptom));
-    });
-    
-    Array.from(allSymptoms).forEach(symptom => {
-        if (!categorizedSymptoms.has(symptom)) {
-            symptomCategories['Other Symptoms'].push(symptom);
-        }
-    });
-    
-    return Array.from(allSymptoms);
-}
+// Related symptoms for each initial symptom
+const relatedSymptoms = {
+    'joint_pain': ['joint_stiffness', 'joint_swelling', 'joint_tenderness', 'joint_redness', 'joints_pop_or_crackle_often'],
+    'muscle_pain': ['muscle_weakness', 'muscle_cramps', 'muscle_stiffness', 'muscle_spasms', 'muscle_tenderness'],
+    'fatigue': ['muscle_fatigue', 'fatigue_with_exertion', 'lack_of_energy', 'extreme_exhaustion'],
+    'swelling': ['swelling_around_eye', 'swelling_in_shoulders', 'swelling_in_elbows', 'swelling_in_knees', 'swelling_in_heels'],
+    'bone_pain': ['back_pain', 'spine_pain', 'pelvis_pain', 'leg_pain', 'weakened_bones']
+};
 
 // Format symptom text for display
 function formatSymptomText(symptom) {
@@ -64,16 +50,11 @@ function formatSymptomText(symptom) {
     ).join(' ');
 }
 
-// Create question HTML with category grouping
+// Create question HTML
 function createQuestionHTML(symptom, index, total) {
-    const category = Object.entries(symptomCategories).find(([_, symptoms]) => 
-        symptoms.includes(symptom)
-    )?.[0] || 'Other Symptoms';
-    
     return `
         <div class="question-card">
             <h4 class="mb-3">Question ${index + 1} of ${total}</h4>
-            <p class="text-muted mb-2">Category: ${category}</p>
             <p class="mb-3">Do you experience ${formatSymptomText(symptom)}?</p>
             <div class="d-grid gap-2">
                 <button class="btn btn-outline-primary btn-option" data-symptom="${symptom}" data-value="yes">Yes</button>
@@ -154,14 +135,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartBtn = document.getElementById('restart-btn');
     
     let currentQuestion = 0;
-    let symptoms = [];
+    let questions = [];
     let presentSymptoms = [];
+    let isInitialPhase = true;
     
     // Start diagnosis
     startBtn.addEventListener('click', () => {
         welcomeSection.classList.add('d-none');
         questionSection.classList.remove('d-none');
-        symptoms = getAllSymptoms();
+        questions = initialQuestions;
         showQuestion();
     });
     
@@ -171,23 +153,42 @@ document.addEventListener('DOMContentLoaded', () => {
         welcomeSection.classList.remove('d-none');
         currentQuestion = 0;
         presentSymptoms = [];
-        updateProgress(0, symptoms.length);
+        isInitialPhase = true;
+        updateProgress(0, questions.length);
     });
     
     // Show current question
     function showQuestion() {
-        if (currentQuestion >= symptoms.length) {
+        if (currentQuestion >= questions.length) {
+            if (isInitialPhase) {
+                // After initial phase, get related symptoms for positive answers
+                const positiveSymptoms = presentSymptoms.filter(symptom => 
+                    initialQuestions.includes(symptom)
+                );
+                
+                if (positiveSymptoms.length > 0) {
+                    // Add related symptoms for each positive initial symptom
+                    questions = [...new Set([
+                        ...positiveSymptoms.flatMap(symptom => relatedSymptoms[symptom] || [])
+                    ])];
+                    presentSymptoms = []; // Reset symptoms for related questions
+                    currentQuestion = 0;
+                    isInitialPhase = false;
+                    showQuestion();
+                    return;
+                }
+            }
             showResults();
             return;
         }
         
         questionContainer.innerHTML = createQuestionHTML(
-            symptoms[currentQuestion],
+            questions[currentQuestion],
             currentQuestion,
-            symptoms.length
+            questions.length
         );
         
-        updateProgress(currentQuestion, symptoms.length);
+        updateProgress(currentQuestion, questions.length);
         
         // Add event listeners to answer buttons
         document.querySelectorAll('.btn-option').forEach(btn => {
@@ -213,4 +214,4 @@ document.addEventListener('DOMContentLoaded', () => {
         const results = analyzeSymptoms(presentSymptoms);
         displayResults(results);
     }
-});
+}); 
